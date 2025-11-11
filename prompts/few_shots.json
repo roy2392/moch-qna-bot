@@ -1,0 +1,274 @@
+{
+  "few_shot_examples": [
+    {
+      "id": "dira_behanaha_commercial_property",
+      "user_query": "האם בעלות של 50% ומעלה בנכס מסחרי(משרד) פוגעת הזכאות שלי בתכניות לדיור כמו דירה בהנחה, מחיר למשתכן וכו. תודה מראש",
+      "classification": {
+        "main_topic": "דירה בהנחה - נושאי זכאות לתכנית",
+        "sub_topic": "שאלות כלליות על כללי התכנית לפני הגשת בקשה לזכאות"
+      },
+      "response_structure": {
+        "acknowledgment": "אני מבין שאתה שואל האם בעלות על נכס מסחרי (משרד) משפיעה על הזכאות שלך לתכניות דירה בהנחה.",
+        "relevant_info": "תכניות דירה בהנחה מיועדות ל'חסרי דירה' - כלומר מי שאין לו בעלות על נכס למגורים. בעלות על נכס מסחרי עשויה להשפיע על הזכאות בהתאם לכללים הספציפיים של כל תכנית.",
+        "links": {
+          "info_page": "https://www.gov.il/he/pages/mechir_lamishtaken_guide",
+          "contact": "https://www.gov.il/he/pages/mishtaken_contact"
+        },
+        "next_steps": "מומלץ לקרוא את המדריך המלא ולפנות ישירות למשרד לבירור מדויק של המקרה שלך."
+      }
+    },
+    {
+      "id": "renew_eligibility_certificate",
+      "user_query": "איך אפשר לחדש תעודת זכאות אם עבר לי התוקף? אשמח שתזרו אלי בהקדם",
+      "classification": {
+        "main_topic": "דירה בהנחה - נושאי זכאות לתכנית",
+        "sub_topic": "שאלות כלליות על כללי התכנית לפני הגשת בקשה לזכאות"
+      },
+      "response_structure": {
+        "acknowledgment": "אני מבין שתעודת הזכאות שלך פגה תוקף ואתה רוצה לחדש אותה.",
+        "relevant_info": "ניתן לחדש תעודת זכאות דרך חברת ההרשמה לסיוע בה אתה רשום (מילגם, אלונים-מגער, או מעוף). התהליך כולל תשלום אגרה ועדכון מסמכים במידת הצורך.",
+        "links": {
+          "info_page": "https://www.gov.il/he/pages/mechir_lamishtaken_guide",
+          "contact": "https://www.gov.il/he/pages/mishtaken_contact"
+        },
+        "next_steps": "פנה לחברת ההרשמה בה אתה רשום או השתמש בטופס הפנייה המקוון."
+      }
+    },
+    {
+      "id": "milgam_eligibility_not_updated",
+      "user_query": "אני רשום בחברת מילגם. היה לי אישור זכאות בתוקף עד 13.11.22. חדשתי אותו השבוע ושלמתי 50 שח ולא התעדכו באתר.. אנא בדיקתכם. ממתינה לעדכון, תודה.",
+      "classification": {
+        "main_topic": "דירה בהנחה - נושאי זכאות לתכנית",
+        "sub_topic": "נושאי זכאות בחברת מילגם"
+      },
+      "response_structure": {
+        "acknowledgment": "אני מבין שחידשת את אישור הזכאות שלך בחברת מילגם, שילמת את האגרה אך הסטטוס טרם התעדכן באתר.",
+        "relevant_info": "בתאריך 01.08.2024 בוצע שינוי בחברות ההרשמה. ייתכן שיש צורך לברר האם שויכת לחברת מילגם או לחברה אחרת. פנייתך תועבר לנציג חברת מילגם לטיפול.",
+        "links": {
+          "contact": "https://www.gov.il/he/pages/mishtaken_contact"
+        },
+        "additional_info": "לבירור חברת הסיוע המעודכנת: מוקד *5442 או באזור האישי הממשלתי",
+        "next_steps": "המתן למענה מנציג חברת מילגם, או פנה ישירות למוקד השירות."
+      }
+    },
+    {
+      "id": "grant_mortgage_inquiry",
+      "user_query": "שלום, לפני כ 6 שנים זכיתי במחיר למשתכן בירושלים. כחלק מהזכיה ניתן לי מענק מותנה בסך 40,000. האם הכספים של המענק אכן נכנסו או הגיעו לאן שהוא. כתוב באתר של משרד השיכון שהמענק יכנס לאחר סיום הבניה אבל לא נראה שהבנק קיבל אותו. כיצד ניתן לבדוק או לקבל את כספי המענק?",
+      "classification": {
+        "main_topic": "דירה בהנחה - נושאי זכאות לתכנית",
+        "sub_topic": "שאלות/תלונות בנושא מענקים ומשכנתאות"
+      },
+      "key_terms": ["מענק", "משכנתא", "דירה בהנחה", "מחיר למשתכן"],
+      "response_structure": {
+        "acknowledgment": "אני מבין שזכית במחיר למשתכן והמענק המותנה בסך 40,000 ₪ טרם הועבר לבנק, למרות שהבנייה הסתיימה.",
+        "relevant_info": "מענק מותנה מועבר בדרך כלל לאחר סיום הבנייה והגשת המסמכים הנדרשים. יש לוודא שכל התנאים התקיימו ושהבנק קיבל את האישורים הנדרשים.",
+        "links": {
+          "info_page": "https://www.gov.il/he/pages/benefits_in_apartment_funding",
+          "contact": "https://www.gov.il/he/pages/mishtaken_contact"
+        },
+        "next_steps": "פנה למשרד דרך טופס הפנייה המקוון כדי לברר את מצב המענק ולקבל מעקב אישי."
+      }
+    },
+    {
+      "id": "complaint_registration_company",
+      "user_query": "אני רשום בחברת מילגם. פניתי לחברה מספר פעמים והבעיה לא טופלה.",
+      "classification": {
+        "main_topic": "דירה בהנחה - נושאי זכאות לתכנית",
+        "sub_topic": "תלונה על חברת ההרשמה"
+      },
+      "note": "הבחנה חשובה: זו תלונה על חברת ההרשמה, לא פנייה ישירה לחברה",
+      "response_structure": {
+        "acknowledgment": "אני מבין שפנית מספר פעמים לחברת מילגם והבעיה טרם טופלה כראוי.",
+        "relevant_info": "תלונות על חברות הרשמה מטופלות ישירות על ידי משרד הבינוי והשיכון. חשוב לפרט את כל הנתונים: שם הסניף, תאריכי הפניות, סוג השירות, ושם העובד שטיפל בך.",
+        "links": {
+          "contact": "https://www.gov.il/he/pages/mishtaken_contact"
+        },
+        "next_steps": "הגש תלונה רשמית דרך טופס הפנייה עם כל הפרטים הרלוונטיים, והמשרד יטפל בנושא."
+      }
+    },
+    {
+      "id": "rental_assistance_general_request",
+      "user_query": "הגשתי ערעור על הפסקת סיוע בשכר דירה הגיע לי הודעה לא ברורה",
+      "classification": {
+        "main_topic": "סיוע בשכר דירה",
+        "sub_topic": "בקשה לסיוע בשכר דירה"
+      },
+      "note": "נושא משני זה כולל כל מה שקשור לסיוע בשכר דירה שלא מופיע בנושאים המשניים האחרים",
+      "response_structure": {
+        "acknowledgment": "אני מבין שהגשת ערעור על הפסקת הסיוע בשכר דירה וקיבלת הודעה שאינה ברורה.",
+        "relevant_info": "ערעורים על החלטות בנושא סיוע בשכר דירה מטופלים על ידי חברת ההרשמה לסיוע או ועדת חריגים. חשוב לוודא שהערעור הוגש עם כל המסמכים התומכים.",
+        "links": {
+          "info_page": "https://www.gov.il/he/pages/rental_assistance_step_by_step",
+          "contact": "https://www.gov.il/apps/moch/viewlist/list/chavarot-harshama-siyua"
+        },
+        "next_steps": "פנה לחברת ההרשמה לבירור ההודעה, או פנה למשרד להבהרה נוספת."
+      }
+    },
+    {
+      "id": "mental_health_additional_assistance",
+      "user_query": "שלום לכם, אני מקבלת סיוע בשכר דירה היות ואני אם חד הורית. כ\"כ הבנתי שהיות שאני מתמודדת עם ילד נכה בבית, שהיינו בוועדה של פסיכיאטר ורופא ילדים בביטוח לאומי... לקבל סיוע מוגדל. אשמח שזה יטופל אני מתמודדת ומאוד קשה לי.",
+      "classification": {
+        "main_topic": "סיוע בשכר דירה",
+        "sub_topic": "תוספת סיוע שכר דירה למתמודדי נפש"
+      },
+      "response_structure": {
+        "acknowledgment": "אני מבין שאת מקבלת סיוע בשכר דירה כאם חד הורית ומתמודדת עם ילד עם מוגבלות נפשית, ורוצה לברר זכאות לסיוע מוגדל.",
+        "relevant_info": "תוספת סיוע בשכר דירה למתמודדי נפש ניתנת רק למי שכבר מקבל סיוע בסיסי ממשרד הבינוי והשיכון. התוספת ניתנת מטעם משרד הבריאות.",
+        "links": {
+          "info_page": "https://www.gov.il/he/pages/rental_assistance_step_by_step",
+          "contact": "https://www.gov.il/apps/moch/viewlist/list/chavarot-harshama-siyua"
+        },
+        "additional_info": "לפנייה ישירה למשרד הבריאות: shar_dira@moh.gov.il",
+        "next_steps": "פני למשרד הבריאות באימייל הנ\"ל או דרך חברת ההרשמה לסיוע לבירור הזכאות לתוספת."
+      }
+    },
+    {
+      "id": "public_housing_increased_assistance",
+      "user_query": "שלום רב אשמח לדעת קיבלתי אישור מוועדה להגדלת הסיוע בשכר דירה הפרש של שש מאות שקל לא הכניסו לי מיולי עד נובמבר רשום במכתב החלטה יולי לא הכניסו את ההפרש מדוע אשמח לבירור ומענה",
+      "classification": {
+        "main_topic": "סיוע בשכר דירה",
+        "sub_topic": "סיוע מוגדל לזכאי דיור ציבורי"
+      },
+      "response_structure": {
+        "acknowledgment": "אני מבין שקיבלת אישור להגדלת סיוע בשכר דירה בסך 600 ₪, אך ההפרש לא שולם לך בחודשים יולי עד נובמבר.",
+        "relevant_info": "ממתינים לדיור ציבורי זכאים לסיוע מוגדל בתקופת ההמתנה. במקרה של עיכוב בתשלום ההפרש, יש לפנות לבירור ולקבלת החזר בדיעבד.",
+        "links": {
+          "info_page": "https://www.gov.il/he/pages/rental_assistance_step_by_step",
+          "contact": "https://www.gov.il/apps/moch/viewlist/list/chavarot-harshama-siyua"
+        },
+        "next_steps": "פנה לחברת ההרשמה לסיוע או למשרד באמצעות טופס הפנייה לבירור התשלום וקבלת ההפרשים."
+      }
+    },
+    {
+      "id": "new_immigrant_rental_assistance",
+      "user_query": "שלום, אני עולה חדש מאז 23 במרץ 2022. קיבלתי סיוע ממשרד הבינוי עד יולי. ביולי 2025 הפסקתי לקבל תשלומים. לאחר שהגשתי בקשה, נאמר לי שהתיק האישי שלי נסגר ונפתח תיק חדש עקב מצבי המשפחתי.",
+      "classification": {
+        "main_topic": "סיוע בשכר דירה",
+        "sub_topic": "קצבאות שכר דירה עולים חדשים"
+      },
+      "response_structure": {
+        "acknowledgment": "אני מבין שאתה עולה חדש מ-2022, קיבלת סיוע עד יולי 2025 והתשלומים הופסקו עקב שינוי במצב המשפחתי ופתיחת תיק חדש.",
+        "relevant_info": "עולים חדשים זכאים לסיוע בשכר דירה עד תום השנה החמישית לעלייה, לאחר סיום סל הקליטה. שינוי במצב משפחתי עשוי להשפיע על סכום הסיוע והדרישות.",
+        "links": {
+          "info_page": "https://www.gov.il/he/pages/rental_assistance_step_by_step",
+          "contact": "https://www.gov.il/apps/moch/viewlist/list/chavarot-harshama-siyua"
+        },
+        "next_steps": "פנה לבירור מדוע התיק החדש אינו מייצר תשלומים, ולוודא שכל הפרטים עודכנו כראוי. ניתן לבקש גם החזר בדיעבד."
+      }
+    },
+    {
+      "id": "transfer_between_companies",
+      "user_query": "שלום אני גר בתל אביב ואני רוצה לעבור לקבל שירות בתל אביב מחברת מילגם בסניף בתל אביב בקרליבך איך אפשר לעבור לקבל שירות בחברת מילגם בתל אביב",
+      "classification": {
+        "main_topic": "סיוע בשכר דירה",
+        "sub_topic": "מעבר מחברת הרשמה אחת לאחרת"
+      },
+      "response_structure": {
+        "acknowledgment": "אני מבין שאתה מעוניין לעבור לקבל שירות בסניף של חברת מילגם בתל אביב.",
+        "relevant_info": "באופן זמני, מעבר בין חברות הרשמה לא מתאפשר עד לתאריך 4.2.2025, למעט במקרים חריגים. ניתן לקבל שירות בכל סניף של החברה בה אתה רשום.",
+        "links": {
+          "info_page": "https://www.gov.il/he/pages/rental_assistance_step_by_step",
+          "contact": "https://www.gov.il/apps/moch/viewlist/list/chavarot-harshama-siyua"
+        },
+        "next_steps": "פנה לסניף הקרוב של חברת מילגם בתל אביב, או המתן עד לתאריך 4.2.2025 לאפשרות מעבר רשמי."
+      }
+    },
+    {
+      "id": "exemption_from_debt_repayment",
+      "user_query": "שלום בשנת 2018 קיבלתי תעודת זכאות לסיוע בשכר דירה לאור מסמכים שהמצאתי. לאחר תקופה הודיעו לי כי הסיוע ניתן בטעות וכי איני זכאית לקבלתו ולכן נוצר לי חוב של עשרות אלפי שקלים. אני מבקשת לבטל את החוב",
+      "classification": {
+        "main_topic": "סיוע בשכר דירה",
+        "sub_topic": "פטור מהחזרת כספי סיוע בשכר דירה"
+      },
+      "response_structure": {
+        "acknowledgment": "אני מבין שקיבלת סיוע בשכר דירה ב-2018 שלפי המשרד ניתן בטעות, ונוצר לך חוב של עשרות אלפי שקלים שאת מבקשת לבטל.",
+        "relevant_info": "במקרה של סיוע שניתן שלא כדין, ניתן להגיש בקשה לפטור מהחזרת החוב או להסדרת תשלומים. יש להגיש את הבקשה דרך חברת ההרשמה לסיוע עם מסמכים תומכים.",
+        "links": {
+          "info_page": "https://www.gov.il/he/pages/rental_assistance_step_by_step",
+          "contact": "https://www.gov.il/apps/moch/viewlist/list/chavarot-harshama-siyua"
+        },
+        "next_steps": "הגישי בקשה רשמית לפטור מהחזרת החוב או הסדר תשלומים, תוך הסבר המקרה והצגת מסמכים רלוונטיים."
+      }
+    },
+    {
+      "id": "appeal_assistance_amount",
+      "user_query": "אני פונה אליכם בעקבות חישוב סיוע שגוי בשכר דירה שלי. בחישוב האחרון, נראה שהסיוע נחשב כאילו אין לי ילדים, בעוד שאני אמא ל שני ילדים, אחד מהם נכה.",
+      "classification": {
+        "main_topic": "סיוע בשכר דירה",
+        "sub_topic": "ערעור על גובה הסיוע בשכר דירה"
+      },
+      "response_structure": {
+        "acknowledgment": "אני מבין שגובה הסיוע בשכר דירה חושב בצורה שגויה ללא התחשבות בשני הילדים שלך, כולל ילד עם מוגבלות.",
+        "relevant_info": "ניתן לערער על גובה הסיוע בפני ועדת חריגים. יש להגיש את הערעור דרך חברת ההרשמה לסיוע עם מסמכים תומכים כגון תעודות לידה ואישורי נכות.",
+        "links": {
+          "info_page": "https://www.gov.il/he/pages/rental_assistance_step_by_step",
+          "contact": "https://www.gov.il/apps/moch/viewlist/list/chavarot-harshama-siyua"
+        },
+        "next_steps": "הגישי ערעור רשמי עם כל המסמכים הרלוונטיים המוכיחים את מספר הילדים והמצב המשפחתי."
+      }
+    },
+    {
+      "id": "retroactive_assistance_request",
+      "user_query": "אני מבקש לקבל סיוע בשכר דירה רטרואקטיבית מיום קבלת נכות 12.06.2023",
+      "classification": {
+        "main_topic": "סיוע בשכר דירה",
+        "sub_topic": "בקשה לקבלת סיוע בשכר דירה רטרואקטיבית"
+      },
+      "response_structure": {
+        "acknowledgment": "אני מבין שאתה מבקש סיוע בשכר דירה באופן רטרואקטיבי מתאריך קבלת הנכות ב-12.06.2023.",
+        "relevant_info": "זכאי המבקש לקבל סיוע בפעם הראשונה יכול לקבל סיוע רטרואקטיבי עד 3 חודשים אחורה, בתנאי שהיה חוזה שכירות בתוקף והוא עומד בקריטריונים.",
+        "links": {
+          "info_page": "https://www.gov.il/he/pages/rental_assistance_step_by_step",
+          "contact": "https://www.gov.il/apps/moch/viewlist/list/chavarot-harshama-siyua"
+        },
+        "next_steps": "הגש בקשה לסיוע רטרואקטיבי דרך חברת ההרשמה לסיוע עם חוזה השכירות ואישור הנכות."
+      }
+    },
+    {
+      "id": "complaint_rental_company",
+      "user_query": "אני רשום בחברת מילגם. פניתי לחברה מספר פעמים והבעיה לא טופלה.",
+      "classification": {
+        "main_topic": "סיוע בשכר דירה",
+        "sub_topic": "תלונות על חברות שכר דירה"
+      },
+      "response_structure": {
+        "acknowledgment": "אני מבין שפנית מספר פעמים לחברת מילגם והבעיה שלך לא טופלה כראוי.",
+        "relevant_info": "תלונות על חברות שכר דירה מטופלות ישירות על ידי משרד הבינוי והשיכון. חשוב לפרט: שם הסניף, תאריכי פניות, סוג השירות ושם העובד.",
+        "links": {
+          "info_page": "https://www.gov.il/he/pages/rental_assistance_step_by_step",
+          "contact": "https://www.gov.il/apps/moch/viewlist/list/chavarot-harshama-siyua"
+        },
+        "next_steps": "הגש תלונה רשמית למשרד דרך טופס הפנייה עם כל הפרטים הרלוונטיים."
+      }
+    }
+  ],
+  "classification_patterns": {
+    "dira_behanaha": {
+      "keywords": ["דירה בהנחה", "מחיר למשתכן", "מחיר מטרה", "מחיר מופחת", "זכאות", "הגרלה", "תעודת זכאות", "חברת הרשמה"],
+      "company_specific": {
+        "milgam": ["מילגם"],
+        "maof": ["מעוף"],
+        "magar_alonim": ["מגער", "אלונים"],
+        "amidar": ["עמידר"]
+      },
+      "sub_topics": {
+        "grants_mortgages": ["מענק", "משכנתא", "מימון"],
+        "general_eligibility": ["זכאי", "תנאים", "מי זכאי", "להירשם"],
+        "complaint_company": ["תלונה", "לא מגיבים", "לא טיפלו", "שירות גרוע"]
+      }
+    },
+    "rental_assistance": {
+      "keywords": ["סיוע בשכר דירה", "שכר דירה", "קצבה", "תשלום", "סיוע"],
+      "sub_topics": {
+        "mental_health": ["מתמודד נפש", "ילד נכה", "משרד הבריאות", "פסיכיאטר"],
+        "public_housing": ["דיור ציבורי", "סיוע מוגדל", "ממתינים"],
+        "new_immigrants": ["עולה חדש", "עלייה", "סל קליטה"],
+        "retroactive": ["רטרואקטיבי", "בדיעבד", "חודשים אחורה"],
+        "appeal": ["ערעור", "חישוב שגוי", "לא מסכים"],
+        "debt_exemption": ["חוב", "בטעות", "פטור"],
+        "transfer_companies": ["מעבר", "להחליף", "חברה אחרת"],
+        "complaint": ["תלונה", "לא טיפלו", "לא מגיבים"]
+      }
+    }
+  }
+}

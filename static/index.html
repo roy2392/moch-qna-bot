@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>עוזר וירטואלי - משרד הבינוי והשיכון</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>🏠 עוזר וירטואלי</h1>
+                <p class="subtitle">משרד הבינוי והשיכון</p>
+            </div>
+            <button class="clear-btn" onclick="clearConversation()" title="נקה שיחה">
+                🗑️ נקה שיחה
+            </button>
+        </header>
+
+        <!-- Chat Container -->
+        <div class="chat-container">
+            <div id="messages" class="messages">
+                <!-- Welcome Message -->
+                <div class="message assistant-message">
+                    <div class="message-content">
+                        <strong>שלום!</strong> אני העוזר הוירטואלי של משרד הבינוי והשיכון.
+                        אני כאן כדי לעזור לך עם מידע על:
+                        <ul>
+                            <li>תכניות "דירה בהנחה"</li>
+                            <li>סיוע בשכר דירה</li>
+                            <li>זכאות ותהליכים</li>
+                            <li>חברות הרשמה</li>
+                        </ul>
+                        איך אוכל לעזור לך היום?
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div id="loading" class="loading" style="display: none;">
+                <div class="typing-indicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <form id="chatForm" class="input-area">
+            <input
+                type="text"
+                id="messageInput"
+                class="message-input"
+                placeholder="הקלד את שאלתך כאן..."
+                autocomplete="off"
+                required
+            >
+            <button type="submit" class="send-btn" id="sendBtn">
+                📤 שלח
+            </button>
+        </form>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span id="status">מוכן</span>
+            <span id="messageCount">0 הודעות</span>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
