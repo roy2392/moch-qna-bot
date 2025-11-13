@@ -16,7 +16,7 @@ class BedrockService:
 
     def __init__(self):
         """Initialize Bedrock client and Langfuse"""
-        self.client = boto3.client('bedrock-runtime')
+        self.client = boto3.client('bedrock-runtime', region_name=settings.aws_region)
         self.default_model_id = settings.default_model_id
 
         # Initialize Langfuse for observability
