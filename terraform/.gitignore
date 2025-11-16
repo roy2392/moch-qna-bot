@@ -1,0 +1,12 @@
+# Terraform files
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfplan
+tfplan
+
+# Sensitive files
+terraform.tfvars
+
+# Lock files (optional - some prefer to commit these)
+# .terraform.lock.hcl

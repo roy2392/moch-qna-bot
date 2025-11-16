@@ -56,7 +56,11 @@ class BedrockService:
             messages = []
             if conversation_history:
                 messages.extend([{"role": msg.role, "content": msg.content} for msg in conversation_history])
-            messages.append({"role": "user", "content": message})
+
+            # Only append the current message if it's not already the last message in history
+            # This prevents duplicate messages when the frontend already includes it in conversation_history
+            if not messages or messages[-1]["content"] != message or messages[-1]["role"] != "user":
+                messages.append({"role": "user", "content": message})
 
             # Prepare request body for Claude models
             if "anthropic.claude" in model_id:
@@ -150,6 +154,152 @@ class BedrockService:
                     pass
 
             logger.error(f"Error generating response: {str(e)}")
+            raise
+
+    async def generate_response_stream(
+        self,
+        message: str,
+        conversation_history: Optional[List[Message]] = None,
+        system_prompt: Optional[str] = None,
+        model_id: Optional[str] = None,
+        temperature: float = 0.7,
+        max_tokens: int = 2048
+    ):
+        """
+        Generate a streaming response using AWS Bedrock
+
+        Args:
+            message: User's input message
+            conversation_history: Previous conversation messages
+            system_prompt: System prompt to guide assistant behavior
+            model_id: Bedrock model ID to use
+            temperature: Temperature for generation
+            max_tokens: Maximum tokens to generate
+
+        Yields:
+            Chunks of generated response text
+        """
+        try:
+            start_time = time.time()
+            model_id = model_id or self.default_model_id
+
+            # Use provided system prompt or load from file
+            system = system_prompt or settings.load_system_prompt()
+
+            # Build messages array
+            messages = []
+            if conversation_history:
+                messages.extend([{"role": msg.role, "content": msg.content} for msg in conversation_history])
+
+            # Only append the current message if it's not already the last message in history
+            if not messages or messages[-1]["content"] != message or messages[-1]["role"] != "user":
+                messages.append({"role": "user", "content": message})
+
+            # Prepare request body for Claude models
+            if "anthropic.claude" in model_id:
+                body = json.dumps({
+                    "anthropic_version": "bedrock-2023-05-31",
+                    "max_tokens": max_tokens,
+                    "temperature": temperature,
+                    "system": system,
+                    "messages": messages
+                })
+            else:
+                body = json.dumps({
+                    "messages": messages,
+                    "max_tokens": max_tokens,
+                    "temperature": temperature,
+                    "system": system
+                })
+
+            # Create Langfuse generation span if available
+            generation_context = None
+            generation = None
+            if self.langfuse and settings.use_langfuse:
+                try:
+                    generation_context = self.langfuse.start_as_current_generation(
+                        name="bedrock-generation-stream",
+                        model=model_id,
+                        input=messages,
+                        model_parameters={
+                            "temperature": temperature,
+                            "max_tokens": max_tokens
+                        }
+                    )
+                    generation = generation_context.__enter__()
+                except Exception as e:
+                    logger.warning(f"Could not create Langfuse generation: {e}")
+                    generation_context = None
+                    generation = None
+
+            # Invoke model with streaming
+            logger.info(f"Invoking Bedrock model with streaming: {model_id}")
+            response = self.client.invoke_model_with_response_stream(
+                modelId=model_id,
+                body=body
+            )
+
+            # Process the streaming response
+            full_response = ""
+            input_tokens = 0
+            output_tokens = 0
+
+            for event in response['body']:
+                chunk = json.loads(event['chunk']['bytes'])
+
+                # Extract text based on model type
+                if "anthropic.claude" in model_id:
+                    if chunk.get('type') == 'content_block_delta':
+                        delta = chunk.get('delta', {})
+                        if delta.get('type') == 'text_delta':
+                            text = delta.get('text', '')
+                            full_response += text
+                            yield text
+                    elif chunk.get('type') == 'message_start':
+                        # Extract usage from message_start
+                        usage = chunk.get('message', {}).get('usage', {})
+                        input_tokens = usage.get('input_tokens', 0)
+                    elif chunk.get('type') == 'message_delta':
+                        # Extract output tokens from message_delta
+                        delta_usage = chunk.get('delta', {}).get('usage', {})
+                        output_tokens = delta_usage.get('output_tokens', 0)
+                else:
+                    # Handle other model types
+                    text = chunk.get('completion', '')
+                    full_response += text
+                    yield text
+
+            # Calculate latency
+            latency = time.time() - start_time
+
+            # Update Langfuse generation with output
+            if generation and generation_context:
+                try:
+                    generation.update(
+                        output=full_response,
+                        usage_details={
+                            "input_tokens": input_tokens,
+                            "output_tokens": output_tokens
+                        }
+                    )
+                    generation_context.__exit__(None, None, None)
+                    self.langfuse.flush()
+                except Exception as e:
+                    logger.warning(f"Could not update Langfuse generation: {e}")
+
+            logger.info("Successfully generated streaming response")
+            logger.info(f"Tokens: {input_tokens} input, {output_tokens} output | Latency: {latency:.2f}s")
+
+        except Exception as e:
+            # Close Langfuse generation on error
+            if generation_context:
+                try:
+                    generation_context.__exit__(type(e), e, e.__traceback__)
+                    self.langfuse.flush()
+                except:
+                    pass
+
+            logger.error(f"Error generating streaming response: {str(e)}")
             raise
 
     def list_available_models(self) -> List[str]:

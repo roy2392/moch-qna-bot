@@ -1,0 +1,29 @@
+# AWS Configuration
+aws_region  = "us-east-1"
+environment = "prod"
+
+# Project Configuration
+project_name = "moch-qna-bot"
+
+# Container Configuration
+container_port   = 8000
+container_cpu    = 512    # 256, 512, 1024, 2048, 4096
+container_memory = 1024   # Must be compatible with CPU
+
+# Service Configuration
+desired_count      = 2
+health_check_path  = "/health"
+
+# AWS Credentials (for the application to access Bedrock)
+# IMPORTANT: These are the credentials the application will use
+# NOT the credentials Terraform uses to deploy
+aws_access_key_id     = "YOUR_AWS_ACCESS_KEY_ID"
+aws_secret_access_key = "YOUR_AWS_SECRET_ACCESS_KEY"
+
+# Bedrock Configuration
+default_model_id    = "anthropic.claude-3-sonnet-20240229-v1:0"
+default_temperature = "0.7"
+default_max_tokens  = "2048"
+
+# Logging
+log_level = "INFO"

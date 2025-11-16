@@ -1,6 +1,7 @@
 // Configuration
 const API_BASE_URL = window.location.origin;
 const API_ENDPOINT = `${API_BASE_URL}/api/v1/chat`;
+const API_STREAM_ENDPOINT = `${API_BASE_URL}/api/v1/chat/stream`;
 
 // State
 let conversationHistory = [];
@@ -37,14 +38,11 @@ chatForm.addEventListener('submit', async (e) => {
 
     // Show loading
     setLoading(true);
-    updateStatus('שולח הודעה...');
+    updateStatus('מחבר למודל...');
 
     try {
-        // Send to API
-        const response = await sendMessage(message);
-
-        // Add assistant response to UI
-        addMessage('assistant', response.response);
+        // Send to API with streaming
+        await sendMessageStream(message);
 
         updateStatus('מוכן');
     } catch (error) {
@@ -79,6 +77,103 @@ async function sendMessage(message) {
     }
 
     return await response.json();
+}
+
+// Send Message to API with Streaming
+async function sendMessageStream(message) {
+    const requestBody = {
+        message: message,
+        conversation_history: conversationHistory,
+        temperature: 0.7,
+        max_tokens: 2048
+    };
+
+    const response = await fetch(API_STREAM_ENDPOINT, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody)
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.detail || 'Network response was not ok');
+    }
+
+    // Create a placeholder message element for streaming
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'message assistant-message';
+
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'message-content';
+    contentDiv.textContent = '';  // Start empty
+
+    messageDiv.appendChild(contentDiv);
+    messagesContainer.appendChild(messageDiv);
+    scrollToBottom();
+
+    // Process the streaming response
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let fullResponse = '';
+    let firstChunk = true;
+
+    while (true) {
+        const { done, value } = await reader.read();
+
+        if (done) {
+            break;
+        }
+
+        // Decode the chunk
+        const chunk = decoder.decode(value, { stream: true });
+
+        // Process Server-Sent Events format
+        const lines = chunk.split('\n');
+        for (const line of lines) {
+            if (line.startsWith('data: ')) {
+                const data = line.substring(6);
+
+                // Check for completion signal
+                if (data === '[DONE]') {
+                    break;
+                }
+
+                // Check for error
+                if (data.startsWith('[ERROR:')) {
+                    throw new Error(data);
+                }
+
+                // Hide loading and update status on first chunk
+                if (firstChunk && data.trim()) {
+                    setLoading(false);
+                    updateStatus('מקבל תשובה...');
+                    firstChunk = false;
+                }
+
+                // Add the text chunk to the response
+                fullResponse += data;
+
+                // Update the message content in real-time
+                contentDiv.innerHTML = formatMessage(fullResponse);
+                scrollToBottom();
+            }
+        }
+    }
+
+    // Add to conversation history
+    conversationHistory.push({
+        role: 'assistant',
+        content: fullResponse
+    });
+
+    // Save to localStorage
+    saveConversationToStorage();
+
+    // Update message count
+    messageCount++;
+    updateMessageCount();
 }
 
 // Add Message to UI and History

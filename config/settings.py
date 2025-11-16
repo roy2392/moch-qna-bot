@@ -114,23 +114,22 @@ class Settings(BaseSettings):
             except Exception as e:
                 print(f"Warning: Could not load few-shots from Langfuse: {e}")
 
-        if not prompt:
-            # Fallback to local file
-            try:
-                root_dir = Path(__file__).parent.parent
-                fs_path = root_dir / self.few_shots_file
+        # Fallback to local file
+        try:
+            root_dir = Path(__file__).parent.parent
+            fs_path = root_dir / self.few_shots_file
 
-                if fs_path.exists():
-                    with open(fs_path, 'r', encoding='utf-8') as f:
-                        prompt = json.load(f)
-                        print(f"📁 Loaded few-shots from local file")
-                        return prompt
-                else:
-                    print(f"Warning: Few-shots file not found at {fs_path}")
-                    return {}
-            except Exception as e:
-                print(f"Warning: Could not load few-shots from file: {e}")
+            if fs_path.exists():
+                with open(fs_path, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    print(f"📁 Loaded few-shots from local file")
+                    return data
+            else:
+                print(f"Warning: Few-shots file not found at {fs_path}")
                 return {}
+        except Exception as e:
+            print(f"Warning: Could not load few-shots from file: {e}")
+            return {}
 
     def load_system_prompt(self) -> str:
         """Load system prompt from Langfuse or file and inject knowledge base and few-shot examples"""

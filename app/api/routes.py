@@ -1,6 +1,7 @@
 """API routes for the chatbot service"""
 
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import StreamingResponse
 from app.models.schemas import ChatRequest, ChatResponse
 from app.services.bedrock_service import BedrockService
 from app.utils.logger import get_logger
@@ -39,6 +40,54 @@ async def chat(request: ChatRequest):
         )
     except Exception as e:
         logger.error(f"Error processing chat request: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error processing request: {str(e)}")
+
+
+@router.post("/chat/stream")
+async def chat_stream(request: ChatRequest):
+    """
+    Streaming chat endpoint that processes user messages using AWS Bedrock
+    and returns Server-Sent Events (SSE)
+
+    Args:
+        request: ChatRequest containing user message and optional parameters
+
+    Returns:
+        StreamingResponse with text/event-stream content
+    """
+    try:
+        logger.info(f"Received streaming chat request: {request.message[:50]}...")
+
+        async def generate():
+            try:
+                async for chunk in bedrock_service.generate_response_stream(
+                    message=request.message,
+                    conversation_history=request.conversation_history,
+                    system_prompt=request.system_prompt,
+                    model_id=request.model_id,
+                    temperature=request.temperature,
+                    max_tokens=request.max_tokens
+                ):
+                    # Send as Server-Sent Event
+                    yield f"data: {chunk}\n\n"
+
+                # Send completion signal
+                yield "data: [DONE]\n\n"
+            except Exception as e:
+                logger.error(f"Error in streaming generation: {str(e)}")
+                yield f"data: [ERROR: {str(e)}]\n\n"
+
+        return StreamingResponse(
+            generate(),
+            media_type="text/event-stream",
+            headers={
+                "Cache-Control": "no-cache",
+                "Connection": "keep-alive",
+                "X-Accel-Buffering": "no"  # Disable buffering in nginx
+            }
+        )
+    except Exception as e:
+        logger.error(f"Error processing streaming chat request: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error processing request: {str(e)}")
 
 
