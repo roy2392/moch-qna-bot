@@ -62,26 +62,56 @@ async def chat_stream(request: ChatRequest):
 
         async def generate():
             try:
-                # Run the synchronous generator in a thread pool to avoid blocking
-                loop = asyncio.get_event_loop()
-                generator = bedrock_service.generate_response_stream(
-                    message=request.message,
-                    conversation_history=request.conversation_history,
-                    system_prompt=request.system_prompt,
-                    model_id=request.model_id,
-                    temperature=request.temperature,
-                    max_tokens=request.max_tokens
-                )
+                # Create a queue to pass chunks from thread to async generator
+                import queue
+                import threading
+                chunk_queue = queue.Queue()
 
-                # Iterate over the generator, yielding control between chunks
-                for chunk in generator:
-                    # Send as Server-Sent Event
-                    yield f"data: {chunk}\n\n"
-                    # Yield control to event loop to prevent blocking
-                    await asyncio.sleep(0)
+                # Run the synchronous generator in a separate thread
+                def run_generator():
+                    try:
+                        for chunk in bedrock_service.generate_response_stream(
+                            message=request.message,
+                            conversation_history=request.conversation_history,
+                            system_prompt=request.system_prompt,
+                            model_id=request.model_id,
+                            temperature=request.temperature,
+                            max_tokens=request.max_tokens
+                        ):
+                            chunk_queue.put(("chunk", chunk))
+                        chunk_queue.put(("done", None))
+                    except Exception as e:
+                        chunk_queue.put(("error", str(e)))
 
-                # Send completion signal
-                yield "data: [DONE]\n\n"
+                # Start the thread
+                thread = threading.Thread(target=run_generator)
+                thread.start()
+
+                # Yield chunks from the queue
+                while True:
+                    # Check queue with timeout to allow async operations
+                    try:
+                        msg_type, data = await asyncio.get_event_loop().run_in_executor(
+                            None, lambda: chunk_queue.get(timeout=0.1)
+                        )
+
+                        if msg_type == "chunk":
+                            yield f"data: {data}\n\n"
+                        elif msg_type == "done":
+                            yield "data: [DONE]\n\n"
+                            break
+                        elif msg_type == "error":
+                            logger.error(f"Error in streaming generation: {data}")
+                            yield f"data: [ERROR: {data}]\n\n"
+                            break
+                    except:
+                        # Timeout - yield control and check again
+                        await asyncio.sleep(0.01)
+                        continue
+
+                # Wait for thread to finish
+                thread.join()
+
             except Exception as e:
                 logger.error(f"Error in streaming generation: {str(e)}")
                 yield f"data: [ERROR: {str(e)}]\n\n"
