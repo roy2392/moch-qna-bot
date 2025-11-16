@@ -55,21 +55,30 @@ async def chat_stream(request: ChatRequest):
     Returns:
         StreamingResponse with text/event-stream content
     """
+    import asyncio
+
     try:
         logger.info(f"Received streaming chat request: {request.message[:50]}...")
 
-        def generate():
+        async def generate():
             try:
-                for chunk in bedrock_service.generate_response_stream(
+                # Run the synchronous generator in a thread pool to avoid blocking
+                loop = asyncio.get_event_loop()
+                generator = bedrock_service.generate_response_stream(
                     message=request.message,
                     conversation_history=request.conversation_history,
                     system_prompt=request.system_prompt,
                     model_id=request.model_id,
                     temperature=request.temperature,
                     max_tokens=request.max_tokens
-                ):
+                )
+
+                # Iterate over the generator, yielding control between chunks
+                for chunk in generator:
                     # Send as Server-Sent Event
                     yield f"data: {chunk}\n\n"
+                    # Yield control to event loop to prevent blocking
+                    await asyncio.sleep(0)
 
                 # Send completion signal
                 yield "data: [DONE]\n\n"
