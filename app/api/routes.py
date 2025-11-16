@@ -58,9 +58,9 @@ async def chat_stream(request: ChatRequest):
     try:
         logger.info(f"Received streaming chat request: {request.message[:50]}...")
 
-        async def generate():
+        def generate():
             try:
-                async for chunk in bedrock_service.generate_response_stream(
+                for chunk in bedrock_service.generate_response_stream(
                     message=request.message,
                     conversation_history=request.conversation_history,
                     system_prompt=request.system_prompt,

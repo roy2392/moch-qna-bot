@@ -156,7 +156,7 @@ class BedrockService:
             logger.error(f"Error generating response: {str(e)}")
             raise
 
-    async def generate_response_stream(
+    def generate_response_stream(
         self,
         message: str,
         conversation_history: Optional[List[Message]] = None,
@@ -166,7 +166,7 @@ class BedrockService:
         max_tokens: int = 2048
     ):
         """
-        Generate a streaming response using AWS Bedrock
+        Generate a streaming response using AWS Bedrock (synchronous generator)
 
         Args:
             message: User's input message
