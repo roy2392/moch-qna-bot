@@ -221,7 +221,7 @@ If you need to deploy manually:
 
 ```bash
 # Build and push
-./deploy.sh
+./scripts/deploy.sh
 
 # Force new deployment
 aws ecs update-service \

@@ -60,7 +60,7 @@ desired_count    = 2
 From the project root directory:
 
 ```bash
-./deploy.sh
+./scripts/deploy.sh
 ```
 
 This script will:
@@ -74,13 +74,13 @@ This script will:
 ### 3. Check Status
 
 ```bash
-./status.sh
+./scripts/status.sh
 ```
 
 ### 4. View Logs
 
 ```bash
-./logs.sh
+./scripts/logs.sh
 ```
 
 ## Manual Deployment
@@ -195,7 +195,7 @@ The service automatically scales between `desired_count` and 10 tasks based on:
 
 ```bash
 # Using the script
-./logs.sh
+./scripts/logs.sh
 
 # Or directly
 aws logs tail /ecs/moch-qna-bot --follow --region us-east-1
@@ -210,7 +210,7 @@ View metrics in the AWS Console:
 ### Service Health
 
 ```bash
-./status.sh
+./scripts/status.sh
 ```
 
 Or check the ALB target group health in the AWS Console.
@@ -220,7 +220,7 @@ Or check the ALB target group health in the AWS Console.
 To deploy a new version:
 
 ```bash
-./deploy.sh
+./scripts/deploy.sh
 ```
 
 The script will:
@@ -307,7 +307,7 @@ Currently, AWS credentials are passed as environment variables. For production, 
 
 2. Check task logs:
    ```bash
-   ./logs.sh
+   ./scripts/logs.sh
    ```
 
 3. Common issues:
@@ -319,7 +319,7 @@ Currently, AWS credentials are passed as environment variables. For production, 
 
 1. Check if the application is running:
    ```bash
-   ./logs.sh
+   ./scripts/logs.sh
    ```
 
 2. Verify the health check endpoint:
@@ -332,7 +332,7 @@ Currently, AWS credentials are passed as environment variables. For production, 
 
 1. Check running tasks:
    ```bash
-   ./status.sh
+   ./scripts/status.sh
    ```
 
 2. Review auto-scaling metrics in CloudWatch
@@ -344,7 +344,7 @@ Currently, AWS credentials are passed as environment variables. For production, 
 To destroy all resources:
 
 ```bash
-./destroy.sh
+./scripts/destroy.sh
 ```
 
 Or manually:
