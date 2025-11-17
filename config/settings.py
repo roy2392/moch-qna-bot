@@ -4,11 +4,14 @@ import os
 import json
 from pathlib import Path
 from typing import Optional, Dict, Any
+import httpx
 from pydantic_settings import BaseSettings
 from langfuse import Langfuse
 from dotenv import load_dotenv
 load_dotenv()
 
+# workaround for kate
+client = httpx.Client(verify=False)
 
 class Settings(BaseSettings):
     """Application settings"""
@@ -59,7 +62,8 @@ class Settings(BaseSettings):
             return Langfuse(
                 secret_key=self.langfuse_secret_key,
                 public_key=self.langfuse_public_key,
-                host=self.langfuse_base_url
+                host=self.langfuse_base_url,
+                httpx_client=client
             )
         except Exception as e:
             print(f"Warning: Could not initialize Langfuse client: {e}")

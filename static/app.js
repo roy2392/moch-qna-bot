@@ -42,7 +42,8 @@ chatForm.addEventListener('submit', async (e) => {
 
     try {
         // Send to API with streaming
-        await sendMessageStream(message);
+        // await sendMessageStream(message);
+        await sendMessage(message);
 
         updateStatus('מוכן');
     } catch (error) {
@@ -75,8 +76,11 @@ async function sendMessage(message) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.detail || 'Network response was not ok');
     }
+    const response_json = await response.json()
 
-    return await response.json();
+    addMessage('assistant', response_json.response);
+
+    return response_json;
 }
 
 // Send Message to API with Streaming
@@ -156,7 +160,8 @@ async function sendMessageStream(message) {
                 fullResponse += data;
 
                 // Update the message content in real-time
-                contentDiv.innerHTML = formatMessage(fullResponse);
+                // contentDiv.innerHTML = formatMessage(fullResponse);
+                contentDiv.innerHTML = fullResponse;
                 scrollToBottom();
             }
         }
@@ -195,7 +200,9 @@ function addMessage(role, content) {
     contentDiv.className = 'message-content';
 
     // Format content (preserve line breaks and links)
-    contentDiv.innerHTML = formatMessage(content);
+    const formattedContent = kateFormatMessage(content);
+    contentDiv.appendChild(formattedContent); 
+    // contentDiv.innerHTML = content;
 
     messageDiv.appendChild(contentDiv);
     messagesContainer.appendChild(messageDiv);
@@ -223,6 +230,53 @@ function formatMessage(text) {
     text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 
     return text;
+}
+
+// Add this helper function before addMessage
+function kateFormatMessage(content) {
+    const container = document.createElement('span');
+    
+    // Split content by lines first
+    const lines = content.split('\n');
+    
+    lines.forEach((line, lineIndex) => {
+        // Regex to find markdown links [text](url)
+        const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+        let lastIndex = 0;
+        let match;
+        
+        // Process each link in the line
+        while ((match = linkRegex.exec(line)) !== null) {
+            // Add text before the link
+            if (match.index > lastIndex) {
+                const textBefore = line.substring(lastIndex, match.index);
+                container.appendChild(document.createTextNode(textBefore));
+            }
+            
+            // Create the link element
+            const link = document.createElement('a');
+            link.href = match[2]; // URL
+            link.textContent = match[1]; // Link text
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            container.appendChild(link);
+            
+            lastIndex = linkRegex.lastIndex;
+        }
+        
+        // Add remaining text after last link
+        if (lastIndex < line.length) {
+            const textAfter = line.substring(lastIndex);
+            container.appendChild(document.createTextNode(textAfter));
+        }
+        
+        // Add line break (except for last line)
+        if (lineIndex < lines.length - 1) {
+            container.appendChild(document.createElement('br'));
+        }
+    });
+    
+    return container;
 }
 
 // Add Error Message
@@ -314,7 +368,8 @@ function loadConversationFromStorage() {
 
                 const contentDiv = document.createElement('div');
                 contentDiv.className = 'message-content';
-                contentDiv.innerHTML = formatMessage(msg.content);
+                // contentDiv.innerHTML = formatMessage(msg.content);
+                contentDiv.innerHTML = msg.content;
 
                 messageDiv.appendChild(contentDiv);
                 messagesContainer.appendChild(messageDiv);
