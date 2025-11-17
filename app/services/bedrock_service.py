@@ -28,7 +28,7 @@ class BedrockService:
         conversation_history: Optional[List[Message]] = None,
         system_prompt: Optional[str] = None,
         model_id: Optional[str] = None,
-        temperature: float = 0.7,
+        temperature: float = 0.3,
         max_tokens: int = 2048
     ) -> str:
         """
@@ -162,7 +162,7 @@ class BedrockService:
         conversation_history: Optional[List[Message]] = None,
         system_prompt: Optional[str] = None,
         model_id: Optional[str] = None,
-        temperature: float = 0.7,
+        temperature: float = 0.3,
         max_tokens: int = 2048
     ):
         """

@@ -20,7 +20,7 @@ class Settings(BaseSettings):
 
     # Bedrock Configuration
     default_model_id: str = "anthropic.claude-3-sonnet-20240229-v1:0"
-    default_temperature: float = 0.7
+    default_temperature: float = 0.3
     default_max_tokens: int = 2048
     system_prompt_file: str = "prompts/system_prompt.txt"
     knowledge_base_file: str = "prompts/knowledge_base.json"
