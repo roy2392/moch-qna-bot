@@ -3,7 +3,7 @@
 import json
 import boto3
 import time
-from typing import Optional, List, Dict
+from typing import Optional, List
 from app.models.schemas import Message
 from app.utils.logger import get_logger
 from config.settings import settings
@@ -50,7 +50,7 @@ class BedrockService:
             model_id = model_id or self.default_model_id
 
             # Use provided system prompt or load from file
-            system = system_prompt or settings.load_system_prompt()
+            system = system_prompt or settings.load_system_prompt(force_local=True)
 
             # Build messages array
             messages = []
@@ -141,6 +141,15 @@ class BedrockService:
 
             logger.info("Successfully generated response")
             logger.info(f"Tokens: {input_tokens} input, {output_tokens} output | Latency: {latency:.2f}s")
+            
+            if settings.local_dev:
+                # In local development, log the full response for debugging
+                logger.info(f"Full response body: {json.dumps(response_body, indent=2, ensure_ascii=False)}")
+
+            response_start = response_text.find("<response>") + 10
+            response_end = response_text.find("</response>")
+            if response_start != -1 and response_end != -1:
+                return response_text[response_start:response_end].strip()
 
             return response_text
 

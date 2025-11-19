@@ -88,6 +88,7 @@ config/local.json
 # Prompts (keep example files)
 prompts/system_prompt.txt
 prompts/knowledge_base.json
+prompts/few_shots.json
 !prompts/*.example.txt
 !prompts/*.example.json
 
@@ -95,3 +96,4 @@ prompts/knowledge_base.json
 build/
 dist/
 out/
+
