@@ -50,7 +50,7 @@ class BedrockService:
             model_id = model_id or self.default_model_id
 
             # Use provided system prompt or load from file
-            system = system_prompt or settings.load_system_prompt(force_local=True)
+            system = system_prompt or settings.load_system_prompt(force_local=False)
 
             # Build messages array
             messages = []
