@@ -4,7 +4,7 @@ import os
 import json
 from pathlib import Path
 from typing import Optional, Dict, Any
-import httpx
+# import httpx
 from pydantic_settings import BaseSettings
 from langfuse import Langfuse
 from dotenv import load_dotenv
@@ -12,7 +12,7 @@ from datetime import datetime
 load_dotenv()
 
 # workaround for kate
-client = httpx.Client(verify=False)
+# client = httpx.Client(verify=False)
 
 class Settings(BaseSettings):
     """Application settings"""
@@ -66,7 +66,7 @@ class Settings(BaseSettings):
                 secret_key=self.langfuse_secret_key,
                 public_key=self.langfuse_public_key,
                 host=self.langfuse_base_url,
-                httpx_client=client
+                # httpx_client=client
             )
         except Exception as e:
             print(f"Warning: Could not initialize Langfuse client: {e}")
